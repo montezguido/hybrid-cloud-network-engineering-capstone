@@ -1,5 +1,7 @@
 # Hybrid Cloud Network Engineering Capstone
 
+[![Verify independent portfolio exercises](https://github.com/montezguido/hybrid-cloud-network-engineering-capstone/actions/workflows/verify-network-design.yml/badge.svg?branch=main)](https://github.com/montezguido/hybrid-cloud-network-engineering-capstone/actions/workflows/verify-network-design.yml)
+
 A sanitized engineering case study of an officially passed B.S. Cloud and Network Engineering capstone that implemented and validated a secure hybrid network connecting a segmented enterprise environment in GNS3 to AWS through an encrypted Site-to-Site IPsec VPN.
 
 > **Portfolio disclosure:** This repository is an employer-facing technical case study. It does not contain academic assessment instructions, evaluator materials, student information, credentials, restricted lab files, proprietary screenshots, or copied course configurations. Architecture diagrams and documentation in this repository are original portfolio artifacts created to explain the engineering work.
@@ -22,17 +24,21 @@ This repository also contains a **newly written synthetic network-design validat
 
 - [Validator source](portfolio_demo/validate_design.py) — Python standard-library checks for CIDR formatting, duplicate or overlapping VPC/subnet ranges, subnet containment, and simple private-subnet exposure rules.
 - [Synthetic design input](portfolio_demo/sample_design.json) — deliberately invented addressing, not the institution's lab network.
-- [Automated regression tests](tests/test_design_validator.py) — positive and negative test cases.
-- [GitHub Actions workflow](.github/workflows/verify-network-design.yml) — runs unit tests and the sample validation on Linux and Windows.
+- [Network-design unit tests](tests/test_design_validator.py) — positive and negative CIDR/subnet test cases.
+- [Offline policy-intent verifier](portfolio_demo/verify_access_policy.py) and [fictional allowlist/scenarios](portfolio_demo/sample_access_policy.json) — models expected ALLOW/DENY behavior without connecting to AWS.
+- [Policy regression tests](tests/test_access_policy.py) — check implicit-deny behavior, unexpected access, input validation, and overly broad permissions.
+- [GitHub Actions workflow](.github/workflows/verify-network-design.yml) — runs unit tests and both synthetic examples on Linux and Windows.
+- [Requirements-to-evidence matrix](docs/requirements-evidence.md) — distinguishes historical capstone validation from current executable portfolio checks.
 
 Run from the repository root with Python 3.11 or later:
 
 ```bash
 python -m unittest discover -s tests -v
 python portfolio_demo/validate_design.py portfolio_demo/sample_design.json
+python portfolio_demo/verify_access_policy.py portfolio_demo/sample_access_policy.json
 ```
 
-**Scope limitation:** These static design checks do not inspect live AWS configurations, prove routing or security-group enforcement, or reproduce the original capstone environment. The original project's eight validation areas are documented separately below.
+**Scope limitation:** These static design and allowlist-policy checks do not inspect live AWS configurations, prove routing, access-control enforcement, or VPN connectivity, or reproduce the original capstone environment. The original project's eight historical validation areas are documented separately below and mapped to public evidence in the [requirements-to-evidence matrix](docs/requirements-evidence.md).
 
 
 ## Architecture
@@ -271,12 +277,16 @@ hybrid-cloud-network-engineering-capstone/
 │   ├── architecture.md
 │   ├── security-controls.md
 │   ├── validation.md
-│   └── lessons-learned.md
+│   ├── lessons-learned.md
+│   └── requirements-evidence.md
 ├── portfolio_demo/
 │   ├── sample_design.json
-│   └── validate_design.py
+│   ├── validate_design.py
+│   ├── sample_access_policy.json
+│   └── verify_access_policy.py
 ├── tests/
-│   └── test_design_validator.py
+│   ├── test_design_validator.py
+│   └── test_access_policy.py
 └── .github/workflows/
     └── verify-network-design.yml
 ```
