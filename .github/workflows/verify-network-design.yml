@@ -35,3 +35,5 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Validate synthetic network sample
         run: python portfolio_demo/validate_design.py portfolio_demo/sample_design.json
+      - name: Verify synthetic access-policy scenarios
+        run: python portfolio_demo/verify_access_policy.py portfolio_demo/sample_access_policy.json
