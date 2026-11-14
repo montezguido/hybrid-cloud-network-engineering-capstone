@@ -1,0 +1,17 @@
+{
+  "allow_rules": [
+    {
+      "source_cidr": "10.88.10.0/24",
+      "destination": "private-app",
+      "protocol": "tcp",
+      "port": 8080
+    }
+  ],
+  "scenarios": [
+    {"name": "administration-app-allowed", "source_ip": "10.88.10.25", "destination": "private-app", "protocol": "tcp", "port": 8080, "expected": "ALLOW"},
+    {"name": "operations-app-denied", "source_ip": "10.88.20.25", "destination": "private-app", "protocol": "tcp", "port": 8080, "expected": "DENY"},
+    {"name": "administration-ssh-denied", "source_ip": "10.88.10.25", "destination": "private-app", "protocol": "tcp", "port": 22, "expected": "DENY"},
+    {"name": "administration-udp-denied", "source_ip": "10.88.10.25", "destination": "private-app", "protocol": "udp", "port": 8080, "expected": "DENY"},
+    {"name": "unrelated-service-denied", "source_ip": "10.88.10.25", "destination": "other-service", "protocol": "tcp", "port": 8080, "expected": "DENY"}
+  ]
+}
