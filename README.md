@@ -29,6 +29,7 @@ This repository also contains a **newly written synthetic network-design validat
 - [Policy regression tests](tests/test_access_policy.py) — check implicit-deny behavior, unexpected access, input validation, and overly broad permissions.
 - [GitHub Actions workflow](.github/workflows/verify-network-design.yml) — runs unit tests and both synthetic examples on Linux and Windows.
 - [Requirements-to-evidence matrix](docs/requirements-evidence.md) — distinguishes historical capstone validation from current executable portfolio checks.
+- [Original TC1–TC8 traceability](docs/tyn1-test-case-traceability.md) — source-aligned historical test summary, Terraform/VPN evidence, and limitations.
 
 Run from the repository root with Python 3.11 or later:
 
@@ -188,26 +189,28 @@ See [Security Controls](docs/security-controls.md) for additional detail.
 
 ## Functional Validation
 
-The final implementation was validated through eight structured test scenarios.
+The original TYN1 capstone functionality report documents **eight specific historical test cases**, each with a reported PASS result. The summary below follows those original TC numbers; it does **not** mean the network is live today. See the [test-case traceability guide](docs/tyn1-test-case-traceability.md) for the generalized verification steps and evidence limitations.
 
-| Test Area | What Was Validated | Result |
+| Original test case | Historical validation focus | Reported outcome |
 |---|---|---|
-| Layer 2 segmentation | VLAN membership, trunking, same-segment communication | PASS |
-| Addressing | Dynamic user addressing and static infrastructure addressing | PASS |
-| Local routing | Inter-VLAN routing and expected path behavior | PASS |
-| Local security policy | Authorized source allowed; restricted source denied | PASS |
-| AWS networking | VPC/subnet segmentation, workload access, routing | PASS |
-| External access | Controlled reachability of the public web tier | PASS |
-| Hybrid VPN | Established IPsec tunnel and private AWS reachability | PASS |
-| Hybrid security | Source-aware policy enforced across the VPN | PASS |
+| TC1 — Local Layer 2 segmentation | VLAN membership, 802.1Q trunks, same-VLAN communication | PASS |
+| TC2 — Local addressing and external routing | DHCP, static server addressing, routing, general outbound NAT | PASS |
+| TC3 — Local source-based access control | Administration allowed; Operations restricted to the same local server | PASS |
+| TC4 — AWS subnet segmentation | VPC subnets, EC2 workload placement, approved web-to-app flow | PASS |
+| TC5 — AWS web external access | Web response, internal app proxying, verified Elastic IP | PASS |
+| TC6 — AWS cloud access control | App TCP service allowed; unauthorized TCP/22 access blocked | PASS |
+| TC7 — Hybrid IPsec VPN | Terraform VPN plan, tunnel status, private reachability, encrypted counters | PASS |
+| TC8 — Hybrid source-aware security | Applied security-group policy, Administration allowed; Operations denied | PASS |
 
-The VPN validation went beyond checking whether configuration objects existed. The implementation verified:
+The historical VPN validation went beyond checking whether configuration objects existed. The original report documents:
 
 - an established and installed IPsec security association,
 - AWS reporting the active VPN tunnel as operational,
 - successful reachability to private AWS workloads,
 - encrypted packet and byte counters increasing during data-plane tests, and
 - preserved configuration state in version control.
+
+**VPN limitation:** One tunnel was UP during the original validation; the second AWS-provided tunnel remained DOWN. Dual-tunnel failover and production availability were **not** verified.
 
 See [Validation Strategy](docs/validation.md) for the public testing methodology.
 
@@ -277,6 +280,7 @@ hybrid-cloud-network-engineering-capstone/
 │   ├── architecture.md
 │   ├── security-controls.md
 │   ├── validation.md
+│   ├── tyn1-test-case-traceability.md
 │   ├── lessons-learned.md
 │   └── requirements-evidence.md
 ├── portfolio_demo/
