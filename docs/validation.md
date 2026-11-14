@@ -6,6 +6,8 @@ The capstone used structured functional testing to prove that the hybrid network
 
 The public version below summarizes the methodology without reproducing restricted academic test instructions or original submission evidence.
 
+**Historical traceability:** The original TYN1 functionality report contains eight specific test cases (TC1–TC8), described in the [source-aligned evidence guide](tyn1-test-case-traceability.md). The topic-oriented summary below groups them for explanation; it is not an additional set of eight independent school tests.
+
 ---
 
 ## Test Areas
@@ -87,17 +89,19 @@ The project followed several practical testing principles:
 
 ---
 
-## Result Summary
+## Historical Test-Case Result Summary
 
-| Validation Area | Outcome |
+| Original test case | Reported outcome |
 |---|---|
-| Layer 2 segmentation | PASS |
-| Addressing | PASS |
-| Local routing | PASS |
-| Local source-based security | PASS |
-| AWS networking and segmentation | PASS |
-| Controlled external access | PASS |
-| Hybrid IPsec VPN | PASS |
-| Hybrid source-based security | PASS |
+| TC1 — Local VLAN segmentation | PASS |
+| TC2 — Local addressing, routing and outbound NAT | PASS |
+| TC3 — Local source-based reachability restrictions | PASS |
+| TC4 — AWS web/application subnet separation | PASS |
+| TC5 — Public web access and private app proxy route | PASS |
+| TC6 — AWS TCP service permission and denied SSH test | PASS |
+| TC7 — Single active hybrid IPsec tunnel and encrypted traffic | PASS |
+| TC8 — Allowed Administration and denied Operations hybrid access | PASS |
 
-The completed capstone was officially evaluated as passing.
+The original functionality report documents these PASS outcomes with lab test procedures and screenshots. **This public repository does not reproduce or rerun the original lab.** One VPN tunnel was active during TC7; the secondary tunnel was not operating, and automatic failover was **not** validated.
+
+Read the [TC1–TC8 traceability matrix](tyn1-test-case-traceability.md) for the source-to-claim mapping, or the [independent executable evidence](requirements-evidence.md) for the different Python tests that *are* publicly runnable.
