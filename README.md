@@ -16,6 +16,25 @@ The final environment was tested through eight documented functional scenarios c
 
 ---
 
+## Independent, executable engineering demonstration
+
+This repository also contains a **newly written synthetic network-design validator**, separate from the university capstone implementation. It uses fictitious VPC/subnet definitions and requires no AWS credentials or cloud deployment.
+
+- [Validator source](portfolio_demo/validate_design.py) — Python standard-library checks for CIDR formatting, duplicate or overlapping VPC/subnet ranges, subnet containment, and simple private-subnet exposure rules.
+- [Synthetic design input](portfolio_demo/sample_design.json) — deliberately invented addressing, not the institution's lab network.
+- [Automated regression tests](tests/test_design_validator.py) — positive and negative test cases.
+- [GitHub Actions workflow](.github/workflows/verify-network-design.yml) — runs unit tests and the sample validation on Linux and Windows.
+
+Run from the repository root with Python 3.11 or later:
+
+```bash
+python -m unittest discover -s tests -v
+python portfolio_demo/validate_design.py portfolio_demo/sample_design.json
+```
+
+**Scope limitation:** These static design checks do not inspect live AWS configurations, prove routing or security-group enforcement, or reproduce the original capstone environment. The original project's eight validation areas are documented separately below.
+
+
 ## Architecture
 
 ```mermaid
@@ -248,11 +267,18 @@ Configuration checkpoints provided a repeatable recovery path after topology and
 ```text
 hybrid-cloud-network-engineering-capstone/
 ├── README.md
-└── docs/
-    ├── architecture.md
-    ├── security-controls.md
-    ├── validation.md
-    └── lessons-learned.md
+├── docs/
+│   ├── architecture.md
+│   ├── security-controls.md
+│   ├── validation.md
+│   └── lessons-learned.md
+├── portfolio_demo/
+│   ├── sample_design.json
+│   └── validate_design.py
+├── tests/
+│   └── test_design_validator.py
+└── .github/workflows/
+    └── verify-network-design.yml
 ```
 
 ---
