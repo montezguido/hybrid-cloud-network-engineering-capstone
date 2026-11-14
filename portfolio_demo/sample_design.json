@@ -1,0 +1,13 @@
+{
+  "vpcs": [
+    {
+      "name": "example-east",
+      "cidr": "172.22.0.0/16",
+      "subnets": [
+        {"name": "web-a", "cidr": "172.22.1.0/24", "az": "example-zone-a", "exposure": "public", "route_to_igw": true, "public_ip_on_launch": false},
+        {"name": "app-a", "cidr": "172.22.11.0/24", "az": "example-zone-a", "exposure": "private", "route_to_igw": false, "public_ip_on_launch": false},
+        {"name": "app-b", "cidr": "172.22.12.0/24", "az": "example-zone-b", "exposure": "private", "route_to_igw": false, "public_ip_on_launch": false}
+      ]
+    }
+  ]
+}
