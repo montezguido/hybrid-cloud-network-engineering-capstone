@@ -28,9 +28,16 @@ Security Groups limited access to AWS workloads according to their role and sour
 
 The web and application workloads were placed in separate network tiers so that Internet-facing access did not require direct exposure of the private application workload.
 
+### Cloud Service-Level Allow/Deny Test (Original TC6)
+
+The academic report separately tested AWS application access from a temporary cloud-side validation source. The authorized **TCP application service** was reachable, while an unauthorized **SSH connection** to the same application workload was not. The application Security Group was inspected to corroborate the observed difference, and the temporary validation resource was removed afterward. This is a historical result, not a live Security Group assessment.
+
+
 ### IPsec Encryption
 
 The hybrid connection used Site-to-Site IPsec so traffic between the local environment and AWS crossed the hybrid boundary through an encrypted tunnel.
+
+**Availability limit:** One AWS-provided tunnel was active in the original academic validation; secondary-tunnel failover was not tested.
 
 ---
 
@@ -42,6 +49,8 @@ The strongest validation used the same private AWS application destination with 
 - Operations traffic was intentionally restricted.
 
 This demonstrated that the hybrid architecture preserved source identity and security intent across the VPN rather than flattening all connected networks into one trust zone.
+
+The original hybrid test combined applied AWS policy inspection with permitted and denied source-path tests, and confirmed encrypted traffic counters. [See the original TC1–TC8 evidence mapping](tyn1-test-case-traceability.md).
 
 ```mermaid
 flowchart LR
