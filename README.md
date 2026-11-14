@@ -6,6 +6,17 @@ A sanitized engineering case study of an officially passed B.S. Cloud and Networ
 
 > **Portfolio disclosure:** This repository is an employer-facing technical case study. It does not contain academic assessment instructions, evaluator materials, student information, credentials, restricted lab files, proprietary screenshots, or copied course configurations. Architecture diagrams and documentation in this repository are original portfolio artifacts created to explain the engineering work.
 
+## Hiring-manager quick review
+
+**What I built in the academic lab:** A segmented GNS3-to-AWS hybrid network with VLANs, DHCP, routed local networks, AWS web/app tiers, Security Groups, and a Site-to-Site IPsec VPN. The private TYN1 functionality report documents eight test cases with PASS results.
+
+**What I verified historically:** A functioning private IPsec route using StrongSwan and AWS tunnel-status checks, encrypted traffic counters, and two explicit policy comparisons: AWS web-to-app TCP access versus blocked SSH; Administration-to-private-app access versus restricted Operations traffic. **Only one VPN tunnel was active; redundant failover was not tested.**
+
+**What you can run here:** An independent, offline Python [subnet/CIDR validator](portfolio_demo/validate_design.py) and [allowlist policy-intent checker](portfolio_demo/verify_access_policy.py), with [automated regression tests](tests/) and [cross-platform CI](.github/workflows/verify-network-design.yml). These do **not** recreate the WGU network or deploy AWS resources.
+
+**Evidence navigation:** [Original TC1–TC8 mapping](docs/tyn1-test-case-traceability.md) · [Historical versus runnable proof](docs/requirements-evidence.md) · [Network architecture](docs/architecture.md)
+
+
 ---
 
 ## Project Summary
